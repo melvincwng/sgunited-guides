@@ -20,8 +20,8 @@ HTML defines the structure of the code. Considering the HTML below taken from [C
   </p>
   <p>
     In a WhatsApp message sent by Gov.sg on Saturday (Mar 28), authorities
-    advised&nbsp;people to stay home and only head to a mall for essentials,
-    such as food, adding that food and groceries can be purchased online.&nbsp;
+    advised people to stay home and only head to a mall for essentials, such as
+    food, adding that food and groceries can be purchased online.
   </p>
 </header>
 ```
@@ -58,7 +58,7 @@ Html element can have attributes that give additional information to the compone
 
 ```html
 <p title="title of hello">hello</p>
-<a href="www.google.com">google</a>
+<a href="http://www.google.com">google</a>
 ```
 
 ### Block elements

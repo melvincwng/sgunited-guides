@@ -93,27 +93,6 @@ class Person {
 console.log(Person.isOnEarth());
 ```
 
-## Instance Properties
-
-If you know other programming languages (like C#, Java, etc), you are aware that you can declare instance properties in class declaration, like the example given below.
-
-```js
-class Person {
-  name = "";
-  constructor(name, age) {
-    this.name = name;
-    this.age = age;
-  }
-}
-
-const bob = new Person("bob", 30);
-console.log(bob.name);
-```
-
-It is an [experimental feature, available with Node 12](https://github.com/tc39/proposal-class-fields).
-
-You can read the [documentation at MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Class_fields#Public_fields).
-
 ## Static Properties
 
 ```js
@@ -183,7 +162,7 @@ class Person {
   set language(lang) {
     this.language = lang.toUpperCase();
   }
-};
+}
 ```
 
 language is now exposed as a property to be set too, and will be converted to upper case.
@@ -240,16 +219,4 @@ tom.writeCode(); // new method
 
 ## Exercises
 
-### basics
-
 https://github.com/thoughtworks-jumpstart/javascript-classes
-
-### with inheritance
-
-Create a parent **Vehicle** class which has child classes **Car** and **Motorcycle**.
-The classes should have fields such as `manufacturer`, `numberOfWheels` and `color`.
-Which fields should be the parameters of the constructor and which should not be?
-
-**Motorcycle** class should have an extra field for `gear` because it has a 6th gear. There should also be a `getter` for the gear.
-
-What kind of fields and methods should be in the parent class?

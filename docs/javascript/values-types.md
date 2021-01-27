@@ -28,7 +28,7 @@ Number.NEGATIVE_INFINITY === -Infinity // true
 - `` `half of 100 is ${100 / 2}. This can embed values.` ``
 - "con" + "cat" + "e" + "nate"
 - "This is the first line\nthis is the second line"
-- "we are\\\on the same line because of escaped character \\"
+- "we are\\\on the same line because of escaped character"
 
 ### Booleans
 
@@ -67,10 +67,10 @@ This is **type coercion**.
 
 ## Working with numbers
 
-- Arithmetic operators: +, -, /, \_, \*\*, %
+- Arithmetic operators: +, -, /, \*, %
 - Math methods (e.g. Math.pow(2,2))
 - Increment/decrement operators (++ and --)
-- Operators with assignment: +=, -=, /=, \_=
+- Operators with assignment: +=, -=, /=
 
 ## Working with strings
 
@@ -82,7 +82,7 @@ This is **type coercion**.
 
 ## Declaring and initialization variables
 
-![JavaScript variable lifecycle](https://scotch-res.cloudinary.com/image/upload/dpr_2,w_800,q_auto:good,f_auto/media/8976/bNTL1QI3RFebh7C1JPYC_variable%20hoisting.png)
+<img src="https://scotch-res.cloudinary.com/image/upload/dpr_2,w_800,q_auto:good,f_auto/media/8976/bNTL1QI3RFebh7C1JPYC_variable%20hoisting.png" alt="JavaScript variable lifecycle" width="500"/>
 
 Three types of declarations:
 
@@ -140,7 +140,7 @@ A best practice is to place all var statements near to the top of the function. 
 Are `let` and `const` hoisted?
 Yes. There are many conflicting answers of this online but let's check the reliable [MDN web docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_Types#Variable_hoisting).
 
-> In ECMAScript 2015, let and const are hoisted but not initialized. Referencing the variable in the block before the variable declaration results in a ReferenceError, because the variable is in a "temporal dead zone" from the start of the block until the declaration is processed.
+> In ECMAScript 2015, let and const are hoisted but not initialized. Referencing the variable in the block before the variable declaration results in a ReferenceError, because the variable is in a ["temporal dead zone"](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let#temporal_dead_zone_tdz) from the start of the block until the declaration is processed.
 > [MDN web docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_Types#Variable_hoisting)
 
 Example of `let` being "declared" but not initialized throwing **ReferenceError**.
@@ -152,41 +152,13 @@ var name = "James";
 let foo = 1;
 ```
 
-### Temporal Dead Zone (optional)
+### Further reading:
 
-Temporal Dead Zone is a period between entering scope and variable being declared, in which variable can not be accessed, for `let` and `const`.
+**On variable "hoisting":**
 
-The above behaviour of `var` is different from `let` and `const`.
+> The thing that’s confusing about “hoisting” is that nothing is actually “hoisted” or moved around. Now that you understand Execution Contexts and that variable declarations are assigned a default value of undefined during the Creation phase, you understanding “hoisting” because that’s literally all it is. [source](https://ui.dev/ultimate-guide-to-execution-contexts-hoisting-scopes-and-closures-in-javascript/)
 
-```js
-console.log(name); // prints undefined
-console.log(foo); // throws ReferenceError
-var name = "James";
-let foo = 1;
-```
-
-We get a similar error as before when `foo` is not defined at all as a variable. Has `foo` been declared before the console log?
-
-Test it out here in [a REPL](https://repl.it/@leeyh20/hoisting).
-
-This seems as if `let` and `const` are not hoisted. But this is not true.
-
-We can get a sense that `let` is hoisted due to the [following code](https://stackoverflow.com/questions/47589655/javascript-how-let-is-hoisted-or-not-inside-if-block):
-
-```js
-var a = 1;
-
-if (true) {
-  /* start of the Temporal Dead Zone */
-  console.log(a); /* code in the Temporal Dead Zone */
-  /* last line of the Temporal Dead Zone */
-  let a = 2; /* end of the Temporal Dead Zone */
-}
-
-console.log(a);
-```
-
-See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let#Temporal_Dead_Zone_and_errors_with_let for more information.
+> JavaScript is not actually moving code to the top of the page. All this means is that before your code begins to be executed line by line, the JavaScript engine has already set aside memory space for the variables that you have created in that entire code that you have built and all of the functions that you have created, as well. [source](https://medium.com/javascript-in-plain-english/90-of-developers-get-this-wrong-fdbdb2e4bf66)
 
 ## Naming rules and conventions
 

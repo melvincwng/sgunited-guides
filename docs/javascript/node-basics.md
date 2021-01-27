@@ -21,7 +21,7 @@ For example,
 Don't use NodeJS to build your server side application under the following cases:
 
 - The application is CPU bound (i.e. it needs to do heavy computation)
-- The application is memory bound (e.g. it takes to loads several GBs of data into memory)
+- The application is memory bound (e.g. it needs to load a lot of data from memory)
 
 Many of the frontend developer tools (e.g. webpack, gulp, etc) are built on top of NodeJS.
 
@@ -31,7 +31,7 @@ Many of the frontend developer tools (e.g. webpack, gulp, etc) are built on top 
 
 ## Node.js architecture
 
-![node js architecture](_media/nodejs.jpg)
+<img src="javascript/_media/nodejs.jpg" alt="node architecture" width="500"/>
 
 - libuv: the low-level I/O engine of Node.js written in C. It encapsulates the details of different I/O APIs on various operating systems, and does the work needed to run tasks asyncronously.
 - V8: the open-source JavaScript engine written in C++ originally developed by Google for the Chrome browser
@@ -46,7 +46,7 @@ Execute javascript scripts with the `node` command:
 node app.js
 ```
 
-Adding .js is optional. If a directory path instead of a file path is provided, Node.js will try to resolve for a `index.js` file.
+Adding a `.js` file is optional. If a directory path e.g. `.` instead of a file path is provided, Node.js will try to resolve for a `index.js` file.
 
 ```
 node .
