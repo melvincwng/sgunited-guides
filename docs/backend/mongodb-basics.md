@@ -2,57 +2,42 @@
 
 MongoDB is a open-source **NoSQL** non-relational database. It is a document-orientated database that is flexible and scalable. It is best used for large amounts of unstructured data.
 
-Learn more about [MongoDB](https://docs.mongodb.com/manual/tutorial/getting-started/#getting-started)
+# Exercise
+
+Try it out [here](https://docs.mongodb.com/manual/tutorial/getting-started/#getting-started)!
 
 ## Start your MongoDB server
 
+Google is your best friend if you run into any issues!
+
 ### Windows
+
+[Follow the instructions for the installation](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/)
 
 Server is run via an executable **mongod.exe** on Windows.
 
-```cmd
-mongod --dbpath /data/db
-```
-
 Depending on the security level of your system, Windows may pop up a Security Alert dialog box about blocking “some features” of C:\Program Files\MongoDB\Server\VERSION_NUMBER\bin\mongod.exe from communicating on networks. All users should select `Private Networks`, such as my home or work network and click `Allow access`.
 
-References:
+Run this in your terminal to start up your mongo shell:
 
-- https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
+```
+$ "C:\Program Files\MongoDB\Server\4.4\bin\mongo.exe"
+```
 
 ### Linux / Mac
 
-Server is run via an executable called **mongod**
+Follow the instructions for the installation:
 
-```sh
-mongod --dbpath ~/data/db
-```
+- [Mac](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/)
+- [Linux](https://docs.mongodb.com/manual/administration/install-on-linux/)
 
-References:
+Server is run via an executable called **mongod**.
 
-- https://docs.mongodb.com/manual/administration/install-on-linux/
-- https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/
+Run these in your terminal to start up your mongo shell:
 
-### General
-
-The `--dbpath` option specifies the location where MongoDB should store data. It can be any folder you create. `/data/db` is just one example.
-Note that the path to mongod.exe and the path to your data folder could be different on your system.
-
-You can add this to the `scripts` in package.json.
-
-```json
-"scripts": {
-    "start:db": "mongod --dbpath ~/data/db",
-    ...
-},
-```
-
-Once the MongoDB server is started, you should see the following line on your console:
-
-```
-
-[initandlisten] waiting for connections on port 27017
-
+```shell
+$ brew services start mongodb-community@4.4
+$ mongo
 ```
 
 ## MongoDB command shell
@@ -99,7 +84,7 @@ show dbs
 Newly created database `mydb` is not shown. This is because there is no documents in it yet.
 
 Insert a new document
-Insert a user `{name: "Babel"}` into a **users** collection
+Insert a user `{ name: "Babel" }` into a **users** collection
 
 ```sh
 db.users.insert({name: "Babel"})
@@ -145,7 +130,7 @@ You can also use [MongoDB Compass](https://www.mongodb.com/products/compass) to 
 - Maps to the objects in your application code, making data easy to work with
 - Scalable for large volume of data
 - Fast, indexing is supported by B-trees
-- Has high availablily due to it being a distributed database
+- Has high availability due to it being a distributed database
 
 > If you’ve experienced difficulties scaling relational databases, this may be great news. But not everyone needs to operate at scale. Maybe all you’ve ever needed is a single database server. Why would you use MongoDB? Perhaps the biggest reason developers use MongoDB isn’t because of its scaling strategy, but because of its intuitive data model.
 

@@ -15,7 +15,7 @@ Managing multiple views in a React app.
 
 When our application grows, it is common to have too many contents to make sense within a page.
 
-One possible solution is to separate the contents into different workflows or different Views.
+One possible solution is to separate the contents into different workflows or different Views. (demo: https://react-router-lab.netlify.app/)
 
 Having a Router within the application allows users to reach out to the different views while staying within our application. React Router is a handy JS library that allows us to achieve this functionality quickly.
 
@@ -28,6 +28,13 @@ Say our application has:
 When a user appends `/weather` to the path in their browser, React Router will only render the components specified within the `/weather` route.
 
 ## Setup
+
+Create a new React app.
+
+```
+npx create-react-app react-router-practice
+cd react-router-practice
+```
 
 The package we are going to use is react-router-dom.
 
@@ -68,12 +75,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 Then we can add 2 Routes, `/home` and `weather`. For now, we are just going to render the title of the page.
 
 ```javascript
-<BrowserRouter
-  getUserConfirmation={(message, callback) => {
-    const allowTransition = window.confirm(message);
-    callback(allowTransition);
-  }}
->
+<BrowserRouter>
   <div>Hello World!</div>
   <Route path="/home" render={() => <h1>Home</h1>} />
   <Route path="/weather" render={() => <h1>Weather</h1>} />
@@ -146,11 +148,11 @@ Everything should work the same as before.
 When path matches, the `Route` component will then render the state component.
 
 ```javascript
-<Route path="/home/admin" render={() => <div>Admin</div>} />
-<Route path="/home" render={() => <div>User</div>} />
+<Route path="/user/admin" render={() => <div>Admin</div>} />
+<Route path="/user" render={() => <div>User</div>} />
 ```
 
-When we hit the path `<host>/home/admin`, both "Admin" and "User" is printed out.
+When we hit the path `<host>/user/admin`, both "Admin" and "User" is printed out.
 To fix this, we can add the Switch.
 
 Sometimes we only want to render the first matching component.
@@ -162,12 +164,12 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 ```javascript
 <Switch>
-  <Route path="/home/admin" render={() => <div>Admin</div>} />
-  <Route path="/home" render={() => <div>User</div>} />
+  <Route path="/user/admin" render={() => <div>Admin</div>} />
+  <Route path="/user" render={() => <div>User</div>} />
 </Switch>
 ```
 
-Hit `<host>/home/admin` again, now only "Admin" is printed out.
+Hit `<host>/user/admin` again, now only "Admin" is printed out.
 
 ### Showing a default page
 
@@ -175,8 +177,8 @@ Using `Switch`, we can prepare a "Page not found" Component and render out when 
 
 ```javascript
 < Switch>
-  <Route path="/home/admin" render={() => <div>Admin</div>} />
-  <Route path="/home" render={() => <div>User</div>} />
+  <Route path="/user/admin" render={() => <div>Admin</div>} />
+  <Route path="/user" render={() => <div>User</div>} />
   <Route path="/" render={() => <div>Page Not Found</div>}>
 </Switch>
 ```
@@ -191,8 +193,8 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 //...
 <Switch>
-  <Route path="/home/admin" render={() => <div>Admin</div>} />
-  <Route path="/home" render={() => <div>User</div>} />
+  <Route path="/user/admin" render={() => <div>Admin</div>} />
+  <Route path="/user" render={() => <div>User</div>} />
   <Route path="/404" render={() => <div>page Not Found</div>} />
   <Redirect to="/404" />
 </Switch>;
@@ -204,7 +206,7 @@ We have learnt to set up Routes to do the conditional rendering.
 
 ### Anchor tags
 
-Using anchor tags or `window.location.href` will cause the browser to reload the entire React app, breaking the Single Page Application experience.
+Using anchor tags or `window.location.href` will cause the browser to reload the entire React app, breaking the Single Page Application experience. (**Update:** As of 28/01/21, this method does not even work anymore!)
 
 Let's try it out:
 
@@ -397,9 +399,9 @@ export default (props) => {
 
 Query params can be used to filter items from a list.
 
-src/containers/Food.js
-
 `/food?type=fruit`
+
+src/containers/FoodQuery.js
 
 ```javascript
 import React from "react";
@@ -411,7 +413,7 @@ const menu = [
   { name: "durian", type: "fruit" },
 ];
 
-const Food = (props) => {
+const FoodQuery = (props) => {
   const useQuery = new URLSearchParams(props.location.search);
   const type = useQuery.get("type");
   const filteredFoods = menu.filter((food) => food.type === type);
@@ -426,7 +428,17 @@ const Food = (props) => {
   );
 };
 
-export default withRouter(Food);
+export default withRouter(FoodQuery);
+```
+
+src/App.js
+
+```js
+<Switch>
+  ...
+  <Route path="/foodquery" component={FoodQuery} />
+  ...
+</Switch>>
 ```
 
 ### Path params
@@ -436,6 +448,8 @@ Path params can be used to select specific information to render.
 For example: if we have a menu of items, and each food item maps to a specific id, we can fetch an item based on the query params.
 
 `/food/1`
+
+src/containers/FoodPath.js
 
 ```javascript
 import React from "react";
@@ -447,7 +461,7 @@ const menu = {
   3: "durian",
 };
 
-const Food = (props) => {
+const FoodPath = (props) => {
   const foodId = props.match.params.id;
   const foodName = menu[foodId] || "something not in the menu";
   return (
@@ -458,16 +472,21 @@ const Food = (props) => {
   );
 };
 
-export default withRouter(Food);
+export default withRouter(FoodPath);
 ```
 
 src/App.js
 
 ```javascript
-<Route path="/food/:id" component={Food} />
+<Switch>
+  ...
+  <Route path="/foodpath/:id" component={FoodPath} />
+  <Route path="/foodpath" component={FoodPath} />
+  ...
+</Switch>
 ```
 
-Try accessing `/food/2` - the Component will display "you have selected: laksa".
+Try accessing `/foodpath/2` - the Component will display "you have selected: laksa".
 
 ## Exercise
 

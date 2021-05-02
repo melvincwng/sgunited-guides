@@ -31,9 +31,7 @@ One is to use the GUI, the other using `netlify-cli`.
 npm install -g serve netlify-cli
 ```
 
-2. Build the file locally
-
-Build the react app
+2. Build the react app
 
 ```sh
 npm run build
@@ -43,17 +41,19 @@ npm run build
 serve -s build
 ```
 
-Deploy Netlify to a temp server
+3. Deploy to a temp Netlify server (publish directory: `./build`)
 
 ```sh
 netlify deploy
 ```
 
-select Netlify to deploy the build folder
+4. Deploy to Netlify production (publish directory: `./build`)
 
 ```sh
 netlify deploy --prod
 ```
+
+Deploying an app that utilises react-router-dom: https://gist.github.com/sabrina-s/c0871264be2bb430d71a730d35015c56#deploying-with-react-router-dom
 
 ## Heroku
 

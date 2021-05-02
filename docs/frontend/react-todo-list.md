@@ -5,39 +5,39 @@
 ## Creating the todo list skeleton
 
 1. Create a new folder called "components"
-2. Create a new file "Todolist.js", within the new folder
-3. Create a placeholder for the Todolist
+2. Create a new file "TodoList.js", within the new folder
+3. Create a placeholder for the TodoList
 
 ```javascript
 import React from "react";
 
-class Todolist extends React.Component {
+class TodoList extends React.Component {
   render() {
     return (
       <div>
-        <div>Todolist</div>
+        <div>TodoList</div>
       </div>
     );
   }
 }
 
-export default Todolist;
+export default TodoList;
 ```
 
 Our todo list holds some data about the items in the todo list.
 We are likely to use `state` to keep track of the items inside of the list so we can use a class component to help us.
 
-4. Import Todolist in App.js
+4. Import TodoList in App.js
 
 ```javascript
 import React from "react";
 import "./App.css";
-import Todolist from "./components/Todolist";
+import TodoList from "./components/TodoList";
 
 function App() {
   return (
     <div>
-      <Todolist />
+      <TodoList />
     </div>
   );
 }
@@ -45,7 +45,7 @@ function App() {
 export default App;
 ```
 
-We should now see the word "Todolist" displayed at the top left of the browser.
+We should now see the word "TodoList" displayed at the top left of the browser.
 
 ## Displaying Todo items
 
@@ -76,7 +76,7 @@ class TodoList extends React.Component {
   render() {
     return (
       <div>
-        <div>Todolist</div>
+        <div>TodoList</div>
         <div>{this.displayTodos()}</div>
       </div>
     );
@@ -229,7 +229,7 @@ class TodoList extends React.Component {
   render() {
     return (
       <div>
-        <div>Todolist</div>
+        <div>TodoList</div>
         <div>{this.displayTodos()}</div>
       </div>
     );
@@ -334,7 +334,7 @@ Now we have a todo list that items we can delete.
 
 ## Adding new todo items
 
-1. Add an input box in Todolist
+1. Add an input box in TodoList
 
 ```javascript
 <input
@@ -353,7 +353,7 @@ handleChange = (event) => {
 };
 ```
 
-Notice that the `handleChange` function is an arrow function. Arrow function bind the current context allowing `this` in `this.setState` pointing to the Todolist.
+Notice that the `handleChange` function is an arrow function. Arrow function bind the current context allowing `this` in `this.setState` pointing to the TodoList.
 
 3. Add a button below the input box and create a new function addNewTodo
 
@@ -393,7 +393,10 @@ In the console, we currently see the warning:
 
 Having an array of elements without a `key` property creates a warning shown above.
 
-**Read more about the `key` property [here](https://stackoverflow.com/questions/28329382/understanding-unique-keys-for-array-children-in-react-js/43892905#43892905)**
+**Read more about the `key` property:**
+
+- https://blog.arkency.com/2014/10/react-dot-js-and-dynamic-children-why-the-keys-are-important/
+- https://stackoverflow.com/questions/28329382/understanding-unique-keys-for-array-children-in-react-js/43892905#43892905
 
 The fix is to add a unique id as key in the array of Todo items.
 
@@ -456,9 +459,12 @@ displayTodos() {
 }
 ```
 
+Our code looks much more readable now. However, notice how we're creating and passing in a new instance of `setTodo` / `deleteTodo` function into _every_ iteration of `<TodoItem/>`. **Can you think of a better way to structure the code?** (Hint: Make use of the `id` of each TodoItem)
+
 ## Exercise
 
 1. Improve the UI of your todo list.
 2. Add a prop that takes in the title of the todo list and display it as the title.
 3. Add an input box and a button to create a new todo list.
 4. Try implementing the same todo list, but with React hooks. Refer to this repo if you need to: https://github.com/sabrina-tw/todo-list-hooks
+5. Add RTL tests!

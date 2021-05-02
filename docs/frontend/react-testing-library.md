@@ -31,9 +31,13 @@
   - tests that works with actual DOM nodes
   - provides facilitate querying the DOM in the same way the user would
 
+### Further reading
+
+- https://www.robinwieruch.de/react-testing-library
+
 ## Installation
 
-As of create-react-app 3.3.0 (2019-12-04), you do not have to do the following steps. `create-react-app` installs the required package for you.
+As of create-react-app 3.3.0 (2019-12-04), you **do not** have to do the following steps. `create-react-app` installs the required package for you.
 
 ```sh
 npm install --save-dev @testing-library/react @testing-library/jest-dom
@@ -127,7 +131,7 @@ clicking on the +1 button increases the counter value
 ```javascript
 describe("+1 button", () => {
   it("should increase the counter value by 1", () => {
-    const { getByText } = render(<App />);
+    const { getByText } = render(<Counter />);
     const addOneButton = getByText("+1");
     fireEvent.click(addOneButton);
     expect(() => getByText("Counter Value: 0")).toThrowError();
@@ -151,12 +155,37 @@ We want to display all the items. When I add text into an inbox box, we want to 
 ![data before filter](_media/dataBeforeFilter.png)
 
 ```javascript
-<input aria-label="filter-text" onChange={this.updateFilterText} />;
-{
-  this.state.data
-    .filter((text) => text.indexOf(this.state.filterText) >= 0)
-    .map((data) => <div key={data}>{data}</div>);
-}
+import React, { useState } from "react";
+
+const data = [
+  "apple",
+  "orange",
+  "apricot",
+  "durian",
+  "water melon",
+  "water chestnut",
+];
+
+const Filter = () => {
+  const [filterText, setFilterText] = useState("");
+
+  const handleFilterTextChange = (e) => {
+    setFilterText(e.target.value);
+  };
+
+  return (
+    <div>
+      <input aria-label="filter-text" onChange={handleFilterTextChange} />
+      {data
+        .filter((text) => text.indexOf(filterText) >= 0)
+        .map((data) => (
+          <div key={data}>{data}</div>
+        ))}
+    </div>
+  );
+};
+
+export default Filter;
 ```
 
 ![data after filter](_media/dataAfterFilter.png)
@@ -164,7 +193,7 @@ We want to display all the items. When I add text into an inbox box, we want to 
 ```javascript
 describe("Filter", () => {
   it("should only show filtered data that contains input string", () => {
-    const { getByText, getByLabelText } = render(<App />);
+    const { getByText, getByLabelText } = render(<Filter />);
     const dataFilterTextInput = getByLabelText("filter-text");
     fireEvent.change(dataFilterTextInput, {
       target: { value: "ap" },
@@ -238,7 +267,7 @@ In our Test file
 
 ```javascript
 describe("NavLink", () => {
-  it("should render Filter component when click on filter link", () => {
+  it("should render Filter component when filter link is clicked", () => {
     const { getByText, getByTestId } = render(<App />);
     const filterLink = getByText("Filter");
 
@@ -246,7 +275,7 @@ describe("NavLink", () => {
     expect(getByTestId("filter")).toBeInTheDocument();
   });
 
-  it("should render Counter component when click on counter link", () => {
+  it("should render Counter component when counter link is clicked", () => {
     const { getByText, getByTestId } = render(<App />);
     const counterLink = getByText("Counter");
 
@@ -258,10 +287,9 @@ describe("NavLink", () => {
 
 ## Testing API
 
-It is common for a React app to be interacting with web servers outside of the app. Testing this interaction is good, but we want to limit it to the bare minimum, this is due to cost and stability.
-We usually do this on a separate End to End test.
+It is common for a React app to be interacting with web servers outside of the app. Testing this interaction is good, but we want to limit it to the bare minimum due to cost and stability. We usually do this on a separate End to End test.
 
-So we want to mock our API, and wee can use another package to help us.
+So we want to mock our API, and we can use another package to help us.
 
 ```sh
 npm install --save-dev axios-mock-adapter
@@ -271,7 +299,7 @@ npm install --save-dev axios-mock-adapter
 import React from "react";
 import axios from "axios";
 
-export class TodoList extends React.Component {
+class TodoList extends React.Component {
   constructor(props) {
     super(props);
 
@@ -296,13 +324,15 @@ export class TodoList extends React.Component {
     );
   }
 }
+
+export default TodoList;
 ```
 
 Test
 
 ```javascript
 import { render, waitFor } from "@testing-library/react";
-import { TodoList } from "./TodoList";
+import TodoList from "./TodoList";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 const mockAxios = new MockAdapter(axios);
@@ -385,6 +415,8 @@ package.json
 ```
 
 ![test coverage](_media/testCoverage.png)
+
+Reference repo: https://github.com/sabrina-tw/react-testing-library
 
 ## Exercise
 
